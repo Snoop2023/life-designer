@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人生设计师 · 五种风格</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=IBM+Plex+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF7EF; --card:#FFFFFF; --ink:#3B3630; --ink-2:#6F665B; --ink-3:#A79C8D; --rule:#EAE1D3;
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:"IBM Plex Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 28px}
+header{padding:76px 0 40px}
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3)}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,5vw,54px);line-height:1.2;margin:18px 0 0}
+h1 em{font-style:normal;color:#B2A28A}
+.sub{max-width:38em;margin:20px 0 0;color:var(--ink-2)}
+.list{display:flex;flex-direction:column;gap:14px;margin:44px 0 0;padding-bottom:88px}
+a.item{
+  display:grid;grid-template-columns:76px 1fr auto;gap:20px;align-items:center;
+  padding:22px 26px;border:1px solid var(--rule);border-radius:16px;background:var(--card);
+  text-decoration:none;color:inherit;transition:border-color .15s, transform .15s;
+}
+a.item:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+a.item .no{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--c)}
+a.item h2{margin:0;font-family:var(--serif);font-size:20px}
+a.item p{margin:4px 0 0;font-size:13.5px;color:var(--ink-2)}
+a.item .go{font-size:12px;letter-spacing:.14em;color:var(--ink-3)}
+.swatches{display:flex;gap:4px;margin-top:10px}
+.swatches i{width:22px;height:8px;border-radius:99px;background:var(--s)}
+.note{padding:0 0 60px;font-size:12.5px;color:var(--ink-3)}
+@media (max-width:640px){
+  a.item{grid-template-columns:56px 1fr;gap:14px}
+  a.item .go{display:none}
+}
+
+.hero-tip{margin:14px 0 0;font-size:13px;letter-spacing:.12em;color:var(--ink-2,#888);opacity:.75}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">人生设计师 · 一场与 AI 的十轮对话</div>
+    <h1>四种风格<br><em>同一篇对话，四件外衣</em></h1>
+    <p class="hero-tip">每个页面右下角都有「夜 ⇄ 昼」滑杆 · 四档明暗随心调 · 自动记住你的选择</p>
+    <p class="sub">每个文件都是完整版本：10 个 Session、27 轮发言、4 条 Insight、90 天计划与第一轮总结，内容完全一致，只是风格不同。每个页面左下角都有「← 风格目录」按钮可以随时回来。点开对比，告诉我你选哪一件。</p>
+  </header>
+
+  <div class="list">
+    <a class="item" href="A-温暖读物.html" style="--c:#C4744E">
+      <span class="no">A</span>
+      <span><h2>温暖读物</h2><p>奶油纸底 + 衬线 + 圆角对话卡，像睡前翻的散文集。拉到夜读档，即是深夜书房。</p>
+      <span class="swatches"><i style="--s:#FBF7EF"></i><i style="--s:#C4744E"></i><i style="--s:#6E8B74"></i><i style="--s:#B98A2F"></i></span></span>
+      <span class="go">打开 →</span>
+    </a>
+    <a class="item" href="B-杂志特稿.html" style="--c:#B33A2B">
+      <span class="no">B</span>
+      <span><h2>杂志特稿</h2><p>等宽标签 + 900 粗黑标题 + 红色点睛，黑白灰的特稿排印，锐利有态度。</p>
+      <span class="swatches"><i style="--s:#FFFFFF"></i><i style="--s:#1A1A1A"></i><i style="--s:#B33A2B"></i><i style="--s:#555555"></i></span></span>
+      <span class="go">打开 →</span>
+    </a>
+    <a class="item" href="C-手账日记.html" style="--c:#D08C60">
+      <span class="no">C</span>
+      <span><h2>手账日记</h2><p>手写字标题、胶带贴纸、虚线边框，像翻开一页写给自己的私人日记。</p>
+      <span class="swatches"><i style="--s:#FDFAF2"></i><i style="--s:#D08C60"></i><i style="--s:#88A878"></i><i style="--s:#C9A227"></i></span></span>
+      <span class="go">打开 →</span>
+    </a>
+    <a class="item" href="D-午夜蓝金.html" style="--c:#C6A15B">
+      <span class="no">D</span>
+      <span><h2>午夜蓝金 <small>高级感</small></h2><p>深炭夜色衬黄铜金，发丝线衬线排印。四档明暗滑杆，一页装下整个昼夜色域。</p>
+      <span class="swatches"><i style="--s:#14161A"></i><i style="--s:#C6A15B"></i><i style="--s:#E9E4D8"></i><i style="--s:#2B2F37"></i></span></span>
+      <span class="go">打开 →</span>
+    </a>
+
+
+  </div>
+
+  <div class="note">确定风格后告诉我字母即可，我会把它设为正式版首页。</div>
+</div>
+</body>
+</html>

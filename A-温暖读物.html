@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人生设计师 · 一场与 AI 的十轮对话</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=IBM+Plex+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   设计令牌：温暖纸质读物 · 一场走心的对话
+   ============================================================ */
+:root{
+  --paper:#FBF7EF;      /* 奶油暖纸 */
+  --card:#FFFFFF;
+  --ink:#3B3630;        /* 暖墨 */
+  --ink-2:#6F665B;
+  --ink-3:#A79C8D;
+  --rule:#EAE1D3;
+  --rule-2:#F0E9DC;
+  /* 角色识别色（低饱和暖色） */
+  --gpt:#6E8B74;        /* ChatGPT · 鼠尾草绿 */
+  --stitch:#C4744E;     /* Stitch · 赤陶 */
+  --insight:#B98A2F;    /* 洞察 · 暖金 */
+  --action:#7A8BA3;     /* 行动 · 灰蓝 */
+  --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:"IBM Plex Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px}
+
+/* ============================================================
+   首屏 Hero
+   ============================================================ */
+.hero{padding:76px 0 44px}
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3)}
+.hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,6vw,66px);line-height:1.18;letter-spacing:.01em;margin:20px 0 0}
+.hero h1 em{font-style:normal;color:#B2A28A}
+.thesis{max-width:40em;margin:24px 0 0;font-size:16px;color:var(--ink-2)}
+.thesis b{color:var(--ink);font-weight:600}
+.thesis + .thesis{margin-top:12px}
+
+/* 会话光谱：圆润的十段，可点击跳转 */
+.smap{margin:40px 0 0}
+.smap-label{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);letter-spacing:.1em;margin-bottom:10px}
+.smap-grid{display:flex;gap:5px}
+.smap-seg{flex:1;display:block;text-decoration:none;color:inherit;min-width:0}
+.smap-seg .bar{display:block;height:12px;background:var(--c);border-radius:99px;opacity:.85;transition:opacity .15s,transform .15s}
+.smap-seg:hover .bar{opacity:1;transform:translateY(-2px)}
+.smap-seg .no{display:block;font-size:12px;font-weight:600;margin-top:8px;color:var(--ink)}
+.smap-seg .kw{display:block;font-size:11px;color:var(--ink-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 统计栏 */
+.stats{display:flex;gap:36px;flex-wrap:wrap;margin:36px 0 0;padding-top:24px;border-top:1px solid var(--rule)}
+.stat b{display:block;font-family:var(--serif);font-size:32px;font-weight:700;line-height:1.1}
+.stat span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ============================================================
+   发言筛选栏
+   ============================================================ */
+.bar{position:sticky;top:0;z-index:40;background:color-mix(in srgb, var(--paper) 88%, transparent);backdrop-filter:blur(8px);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-top:44px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 0}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);background:var(--card);border-radius:999px;padding:6px 15px 6px 11px;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--ink-2);transition:border-color .15s,color .15s,background .15s}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.hint{margin-left:auto;font-size:11px;letter-spacing:.08em;color:var(--ink-3)}
+
+/* ============================================================
+   Session 主体
+   ============================================================ */
+.session{display:grid;grid-template-columns:140px 1fr;gap:40px;border-top:1px solid var(--rule);padding:44px 0 12px}
+.session:first-of-type{border-top:none}
+.s-label{position:sticky;top:92px;align-self:start}
+.s-label .num{font-family:var(--serif);font-weight:700;font-size:44px;line-height:1;color:#D9CCB4}
+.s-label .sess{display:block;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);margin-top:6px}
+.s-label .kw{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.1em;color:var(--c);background:color-mix(in srgb, var(--c) 12%, var(--card));padding:4px 12px;border-radius:999px}
+.s-label h2{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2.2vw,24px);line-height:1.35;margin:12px 0 0}
+.s-body{padding-bottom:30px;min-width:0}
+
+/* 单轮发言：圆角卡片 + 发言人小头像 */
+.turn{margin:0 0 20px;padding:22px 24px 24px;border:1px solid var(--rule);border-left:4px solid color-mix(in srgb, var(--c) 55%, #fff);border-radius:16px;background:var(--card);box-shadow:0 1px 2px rgba(59,54,48,.03);transition:opacity .18s}
+.turn .who{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.turn .ava{width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;flex:none}
+.turn .who .name{font-size:13.5px;font-weight:600;color:var(--ink)}
+.turn .who .role{font-size:11.5px;color:var(--ink-3)}
+.turn p{margin:10px 0;font-size:15.5px;color:var(--ink);max-width:62em}
+.turn p.dim{color:var(--ink-2)}
+/* 强调句：衬线大字 + 暖色底 */
+.turn .q{margin:14px 0;padding:15px 20px;border-radius:12px;background:color-mix(in srgb, var(--c) 9%, var(--card));font-family:var(--serif);font-size:17.5px;font-weight:600;line-height:1.7;max-width:36em}
+/* 要点列表：柔和方块符 */
+.turn ul.dash{margin:10px 0;padding:0;list-style:none}
+.turn ul.dash li{position:relative;padding-left:17px;font-size:14.5px;line-height:1.8;color:var(--ink-2);margin-top:4px}
+.turn ul.dash li::before{content:"";position:absolute;left:0;top:.68em;width:6px;height:6px;border-radius:2px;background:color-mix(in srgb, var(--c) 60%, #fff)}
+/* 箭头流程（Preparation Loop） */
+.flow{margin:14px 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.flow .step{display:inline-block;border:1px solid var(--rule);background:var(--paper);padding:5px 16px;border-radius:999px}
+.flow .arr{display:block;color:var(--ink-3);padding:2px 0 2px 22px;font-size:12px}
+
+/* 本轮 Insight：暖金卡片 */
+.insight-row{margin:8px 0 28px;padding:18px 22px;border:1px solid #EDE0B8;border-radius:16px;background:#FCF6E4;transition:opacity .18s}
+.insight-row .tag{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--insight);font-weight:600}
+.insight-row p{margin:8px 0 0;font-size:14.5px;color:var(--ink-2);max-width:56em}
+.insight-row b{color:var(--ink);font-weight:600}
+
+/* 90 天计划：三张圆角卡 */
+.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 6px}
+.plan .m{padding:16px 18px 18px;border:1px solid var(--rule);border-radius:14px;background:color-mix(in srgb, var(--action) 6%, var(--card))}
+.plan .m .mh{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--action);margin-bottom:8px}
+.plan .m ul{margin:0;padding:0;list-style:none}
+.plan .m li{position:relative;padding-left:14px;font-size:13.5px;line-height:1.75;color:var(--ink-2);margin-top:5px}
+.plan .m li::before{content:"";position:absolute;left:0;top:.7em;width:5px;height:5px;border-radius:50%;background:color-mix(in srgb, var(--action) 55%, #fff)}
+
+/* 筛选态 */
+body.filtering .turn, body.filtering .insight-row{opacity:.13}
+body.filtering .turn.match, body.filtering .insight-row.match{opacity:1}
+
+/* ============================================================
+   第一轮总结 + 结尾句
+   ============================================================ */
+.finale{border-top:1px solid var(--rule);padding:56px 0 32px}
+.finale .num{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)}
+.finale h2{font-family:var(--serif);font-weight:700;font-size:clamp(24px,3vw,32px);margin:12px 0 26px;line-height:1.3}
+.sum{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.sum .item{padding:20px 22px 22px;border:1px solid var(--rule);border-radius:16px;background:color-mix(in srgb, var(--c) 7%, var(--card))}
+.sum .item:last-child{grid-column:1/-1}
+.sum .no{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--c)}
+.sum h3{margin:8px 0 8px;font-size:15.5px;font-weight:600}
+.sum p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.8}
+
+.closing{padding:76px 0 84px;text-align:center}
+.closing .mark{font-family:var(--serif);font-size:44px;line-height:1;color:#D9CCB4}
+.closing p{font-family:var(--serif);font-weight:700;font-size:clamp(22px,3.2vw,32px);line-height:1.65;margin:18px auto 0;max-width:24em}
+.closing p em{font-style:normal;color:#B2A28A}
+
+/* ============================================================
+   数据说明页脚
+   ============================================================ */
+.notes{border-top:1px solid var(--rule);padding:44px 0 88px}
+.notes h3{font-family:var(--serif);font-size:20px;font-weight:700;margin:0 0 16px}
+.notes ol{margin:0;padding-left:1.3em;max-width:60em}
+.notes li{font-size:14px;color:var(--ink-2);margin-bottom:10px}
+.notes b{color:var(--ink);font-weight:600}
+.notes a{color:var(--ink-2)}
+.colophon{margin-top:30px;font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
+
+/* ============================================================
+   移动端
+   ============================================================ */
+@media (max-width:900px){
+  .wrap{padding:0 20px}
+  .hero{padding:48px 0 34px}
+  .smap-seg .kw{display:none}
+  .session{grid-template-columns:1fr;gap:16px;padding:34px 0 6px}
+  .s-label{position:static}
+  .s-label .num{font-size:34px}
+  .turn{padding:18px 18px 20px;border-radius:14px}
+  .plan{grid-template-columns:1fr}
+  .sum{grid-template-columns:1fr}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+
+/* 回退到风格目录 */
+.back-home{position:fixed;left:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:8px 16px;font-size:12.5px;text-decoration:none;font-family:var(--sans);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.back-home:hover{color:var(--ink);border-color:var(--ink-3)}
+
+/* 明暗调节（右下滑杆，记忆档位） */
+:root{
+--paper0:var(--paper);--card0:var(--card);--ink0:var(--ink);--ink20:var(--ink-2);--ink30:var(--ink-3);
+--rule0:var(--rule);--rule20:var(--rule-2);
+--gpt0:var(--gpt);--stitch0:var(--stitch);--insight0:var(--insight);--action0:var(--action);
+}
+.dimmer{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--rule);border-radius:999px; padding:9px 16px;font-size:12px;color:var(--ink-2);font-family:var(--sans);letter-spacing:.08em}
+.dimmer span{color:var(--ink-3)}
+.dimmer input[type=range]{width:96px;accent-color:var(--insight);cursor:pointer}
+.dimmer b{font-weight:600;color:var(--ink);min-width:2.2em;text-align:center}
+body{transition:background .35s,color .35s}
+.turn,.insight-row,.plan .m,.sum .item,.chip,.dimmer,.back-home,.turn .q{transition:opacity .18s,background .35s,border-color .35s,color .35s}
+
+body[data-mode="2"]{
+--paper:color-mix(in srgb,var(--paper0) 90%,#20242A);--card:color-mix(in srgb,var(--card0) 90%,#20242A);
+--rule:color-mix(in srgb,var(--rule0) 88%,#20242A);--rule-2:color-mix(in srgb,var(--rule20) 88%,#20242A);
+}
+body[data-mode="1"]{
+--paper:color-mix(in srgb,var(--paper0) 20%,#22262D);--card:color-mix(in srgb,var(--card0) 15%,#282D35);
+--ink:color-mix(in srgb,var(--ink0) 12%,#F4F0E6);--ink-2:color-mix(in srgb,var(--ink20) 24%,#E6E1D5);
+--ink-3:color-mix(in srgb,var(--ink30) 38%,#CFC9BC);
+--rule:color-mix(in srgb,var(--rule0) 26%,#4C525B);--rule-2:color-mix(in srgb,var(--rule20) 26%,#41474F);
+--gpt:color-mix(in srgb,var(--gpt0) 74%,#FFFFFF);--stitch:color-mix(in srgb,var(--stitch0) 74%,#FFFFFF);
+--insight:color-mix(in srgb,var(--insight0) 74%,#FFFFFF);--action:color-mix(in srgb,var(--action0) 74%,#FFFFFF);
+}
+body[data-mode="0"]{
+--paper:color-mix(in srgb,var(--paper0) 9%,#14161A);--card:color-mix(in srgb,var(--card0) 11%,#1E2127);
+--ink:#ECE7DB;--ink-2:#B6B0A1;--ink-3:#807B6E;
+--rule:color-mix(in srgb,var(--rule0) 13%,#3C414A);--rule-2:color-mix(in srgb,var(--rule20) 11%,#33373F);
+--gpt:color-mix(in srgb,var(--gpt0) 68%,#FFFFFF);--stitch:color-mix(in srgb,var(--stitch0) 68%,#FFFFFF);
+--insight:color-mix(in srgb,var(--insight0) 70%,#FFFFFF);--action:color-mix(in srgb,var(--action0) 70%,#FFFFFF);
+}
+.insight-row{background:color-mix(in srgb, var(--insight) 8%, var(--card));border-color:color-mix(in srgb, var(--insight) 28%, var(--card))}
+
+</style>
+</head>
+<body>
+<div class="dimmer" title="调节明暗"><span>夜</span><input type="range" min="0" max="3" step="1" value="3" id="dimRange"><span>昼</span><b id="dimLabel">明朗</b></div>
+
+<a class="back-home" href="index.html">← 风格目录</a>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">2026.07.09 · 10 个 Session · 一场与 AI 的人生设计对话</div>
+  <h1>人生设计师<br><em>让 AI 帮助我打开自己的内心深处</em></h1>
+  <p class="thesis">起因是看了@数字生命卡兹克发的一篇人生设计师 Prompt 的推文，很受触动。自己最近也有一些迷茫，于是尝试了一下。以下是我和「人生设计师」的完整对话——从给健康、工作、娱乐、爱与连接打分开始，一路问到：<b>如果没有收入压力，你愿意花十年去理解的一件事是什么？</b></p>
+  <p class="thesis">十轮对话最后的收束是同一句话：<b>我真正寻找的，不只是一份工作，而是一个能够一起探索世界、共同成长、共同创造价值的认知共同体。</b></p>
+
+  <div class="smap">
+    <div class="smap-label"><span>SESSION 01 · 定位</span><span>点击跳转 · 结论 · SESSION 10</span></div>
+    <div class="smap-grid" id="smap"></div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+</div></header>
+
+<div class="bar"><div class="wrap legend" id="legend"></div></div>
+
+<main class="wrap" id="main"></main>
+
+<footer class="notes"><div class="wrap">
+  <h3>数据说明</h3>
+  <ol>
+    <li>本页内容整理自 X 帖子 <a href="https://x.com/Stitch4546/status/2075141592541962586">@Stitch4546（stitch-zhouyue）</a>，发布于 2026 年 7 月 9 日。原文为作者与「人生设计师」（ChatGPT）的真实对话记录。</li>
+    <li>作者自述：回答部分是语音输入，表达不够精炼，稍微让 AI 删减了一些口气并改动了一些排版，「可能稍微有一点 AI 味」。本页仅做结构化排版，未改写对话内容，仅修正了个别明显笔误。</li>
+    <li>对话方法源自@数字生命卡兹克分享的「人生设计师」Prompt，融合了 Stanford D.school 人生设计、心流探索、Fear Mapping 与 Odyssey Plan 的思路。</li>
+    <li>页面为温暖读物风格的排版：奶油纸底、衬线标题、圆角对话卡片与会话光谱跳转；点击 ChatGPT / Stitch / 本轮 Insight 标签可只看对应内容。</li>
+  </ol>
+  <div class="colophon" id="colophon"></div>
+</div></footer>
+
+<script>
+'use strict';
+/* ============================================================
+   数据区：十轮对话
+   who: gpt / stitch；块类型: p 段落 / pdim 次要段 / ul 要点 / q 强调句 / flow 箭头流程 / plan 90天计划
+   ============================================================ */
+const P = x => ({ t:'p', x });
+const PD = x => ({ t:'pdim', x });
+const UL = (...items) => ({ t:'ul', items });
+const Q = x => ({ t:'q', x });
+const FLOW = (...items) => ({ t:'flow', items });
+
+const PHASES = {
+  explore:{ c:'var(--gpt)',    label:'向外探索' },
+  inward: { c:'var(--stitch)', label:'向内看见' },
+  stuck:  { c:'var(--insight)',label:'识别困境' },
+  action: { c:'var(--action)', label:'转向行动' }
+};
+
+const SESSIONS = [
+{ id:'s01', num:'SESSION 01', kw:'定位', phase:'explore', title:'从人生设计 Prompt 开始', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('我们先不急着给建议。按照人生设计的方法，先看清你现在站在哪里。'),
+    P('请给四个方面打分：健康、工作/学习、娱乐、爱与连接。然后告诉我：哪一项现在亮起了红灯？')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('健康应该是 7 分。工作效率最近真的很低，可能只有 4 分。娱乐大概也只有 2 分。爱和连接方面很少，归属感有一点，因为我觉得自己正在寻找方向。但家人、朋友、亲密关系这部分完全没有关注。'),
+    P('我觉得最大的红灯是工作。因为现在正处在 AI 历史发展的阶段，很多公司也在扩招。我也在寻找自己的方向：哪些是我热爱的，哪些是我擅长的，哪些事情是只有我能做的。'),
+    P('最近我也在学习 AI，但是又会想到一个现实问题：是不是要去人才密度最高的地方？是不是要换一个城市？但可能现状又不够支撑我特别大胆地试错。所以我会纠结。')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('我听到了两个不同层次的问题。'),
+    PD('第一类是现实约束：'),
+    UL('AI 正处于高速发展阶段。','很多公司在扩招。','你正在学习 AI。','你的资金有限。','去北京、上海、欧洲等人才密度高的地方需要成本。'),
+    P('这些是现实约束，不能靠“努力想”让它消失。'),
+    PD('第二类是设计问题。你说了两句话，我反而记住了：'),
+    Q('我在寻找哪些是我真正热爱的。哪些事情只有我能做。'),
+    P('这两句话比前面那些内容更重要。什么值得我投入未来十年？这是可以设计、可以实验、可以逐步验证的。')]}
+]},
+{ id:'s02', num:'SESSION 02', kw:'心流', phase:'explore', title:'什么事情让我忘记时间？', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('请你回忆一个具体时刻。不是“我一直喜欢什么”，而是一个真实发生过的瞬间。那个瞬间，你完全忘记了时间。'),
+    P('你当时正在做什么？为什么你会忘记时间？最后完成以后，最大的满足感来自哪里？')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('心流的话，我好像只有练书法、写字的时候进入过。学习的过程中也有，尤其是解惑的时候——当自己的困惑被解除，我会很开心。'),
+    P('比如我经常听近代史、政治经济、历史事件、经济学、社会学、心理学这些内容。因为我对世界有好奇，也对自己的生活有困惑。生活有困扰的时候，通过学习把困惑解开，这个过程就会很开心。最近学习新技术、学习 AI，我也挺开心的。'),
+    P('不过我现在好像更多是在学习怎么使用 AI 工具。我真正想学的是 AI 的底层原理。这个可能有点难，但我不怕。'),
+    P('我高中以前数学超级好。并不是说我喜欢计算、算术很快，而是我有联想的能力。尤其做奥数题的时候，我会发现一件事、两件事、三件事之间有相似的结构。大脑对这种相似的结构，其实是有很微弱的、转瞬即逝的感觉的。慢慢捕捉这种感觉，时时刻刻在脑子里转，💡 一瞬间它们之间会联想起来，可能问题就有了解决思路。'),
+    P('所以我最近学习 AI 需要学数学，我一点都不怕，我反而非常兴奋。我觉得这是一个契机，可以让我重新捡起数学。尤其是 AI for math 的领域出现，让我感到超级兴奋。'),
+    P('我特别喜欢研究事物的底层原理。一件事情发生的底层原因，世界运行的底层逻辑。（这好像解释了为什么最近 AI 创业潮很热，我明明有想法、有能力，但做起来总是感觉没有别人那么热情，总感觉有更重要的事情没有做，有不安。原来我更好奇、更想研究的，是 AI 模型的底层原理，是如何创造出 AI。）'),
+    P('我也喜欢用脑科学、神经科学的知识帮助自己成为自己想成为的样子。比如健身、学习，我会用一些脑科学和神经科学的方法，让自己更自然地去做那些事情，而不是靠强迫自己自律。我会固定学习和休息的场所，自己做饭，吃健康的食物，让身体舒服。睡觉的时候，我会让晚上空调开冷一点，便于入睡；早上起床前几个小时，定时打开加热风扇，这样起床以后身体会更有能量，整个人的状态会很棒。'),
+    P('所以让我开心的事情是：提升自己，让自己更优秀、更好看，更有能力被爱，也更有能力去爱别人。如果能把这些经验分享出去，我也会开心。身边很多人请教我，我能帮助他们，也会开心。'),
+    P('比如说，如果你能创造一个 AI，能为人类文明做贡献，让信息流通更顺畅，让人类从无聊的事情里解放出来，我也会开心。我关注政治经济，也是因为我一路走来有很多困扰和不开心。我知道身边的人也有很多困扰，甚至比我更多，所以我会想办法帮他们解决。比如国内经济不好、工作没有意义感，我其实觉得可以有更好的方法，可以共赢，不用那么辛苦。释放创造力，反而效率会更高。现在很多家庭问题，也可以通过 AI，把那些原本没办法表达出来的场景展现出来。')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('我听到了四条一直重复出现的线索。'),
+    P('第一，你真正享受的不是“得到答案”，而是“理解原理”。你说了很多次：底层原理、底层逻辑、世界为什么会这样。'),
+    P('第二，你的快乐不来自知识本身，而来自认知升级。真正让你兴奋的是：困惑 → 提出假设 → 找到解释 → 原来如此。'),
+    P('第三，你特别喜欢抽象。你小时候做数学题，不是因为计算快，而是因为你能发现不同题目背后的共同结构。'),
+    P('第四，你的最终目标不只是知识，而是影响别人。你的链条更像是：理解世界 → 理解自己 → 帮助别人 → 让社会运行得更好。'),
+    P('所以我有一个猜测：你真正沉迷的，不是 AI。而是——'),
+    Q('解释世界。AI 只是目前最吸引你的载体。')]}
+], insight:'Stitch 的心流不是来自“完成任务”，而是来自“困惑被解开”。他真正享受的是复杂系统背后的结构被看见的瞬间。'},
+
+{ id:'s03', num:'SESSION 03', kw:'使命', phase:'explore', title:'如果没有收入压力，我最想研究什么？', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('假设今天世界上已经没有任何收入压力。你的生活完全不用担心钱，未来二十年都不用。你依然每天会起床工作。那么，你最想研究什么？'),
+    P('不是“什么赚钱”，不是“什么好就业”，也不是“什么热门”。而是：如果没有任何现实压力，你愿意花十年去理解的一件事是什么？')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('我觉得这个问题其实已经回答了。如果我什么钱都不缺，我想做的是：让社会运行得更好，让所有人安居乐业，创造一套更好的经济运行方式。'),
+    P('我想研究人类的脑科学、神经科学，让人可以实现自己的价值感，找到有意义的工作。我也想探索更好的经济分配模式，比如通过运动产业、玩的产业，或者其他方式，把钱发出去，同时又能维持社会稳定、正常运转。'),
+    P('机器人、具身智能的发展，研究机器人，研究经济学，研究 AI，这些如果我不缺钱的话，我可能都会做。或者它们可以一起做。因为 AI、神经科学、具身智能，其实都是连接在一起的，而且也会促进经济发展。')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('我想暂停一下。因为你回答的不是“研究对象”，而是“使命”。你说：'),
+    UL('让社会运行得更好；','让所有人安居乐业；','设计新的经济分配方式；','AI、脑科学、机器人促进文明发展。'),
+    P('这些都不是研究对象。这些是使命。如果总结成一句话：'),
+    Q('我希望通过理解复杂系统，帮助更多人发挥潜力，让社会运行得更高效、更公平、更有人性。'),
+    P('这里的使命很清楚。但研究对象仍然需要继续收敛。')]}
+]},
+{ id:'s04', num:'SESSION 04', kw:'提问', phase:'explore', title:'我真正想问世界的那个问题', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('假设未来有一个超级 AI。它可以在一分钟内回答你任何问题，但你每天只能问它一个问题。那个问题是什么？'),
+    P('不是怎么赚钱，也不是怎么申请学校。而是：如果我知道这个答案，我对整个世界的理解都会改变。')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('这个世界一定有某种底层结构。任何事物肯定都有某种结构，因为任何复杂的东西，其实都有一些相似的结构。'),
+    P('比如围棋，如果穷举，会有超级多的可能，人类算力完全达不到。但是 AI 可以赢，它就能找到一种类似的结构。生物也一定有某种结构。'),
+    P('所以我想问的是：这个结构到底是什么？万物底层的结构是什么？这个世界、这个宇宙，最底层的结构是什么？')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('我刚才真正听到的，不是“AI”。而是这句话：任何复杂的东西，背后一定有一种共同的结构。'),
+    P('你举了围棋，但你马上又跳到了生物、宇宙、社会、AI。这说明围棋只是例子。你真正关心的是：复杂系统。你相信：看起来完全不同的东西，最后都可以抽象成一些共同规律。'),
+    P('很多人喜欢的是学习更多知识。而你的表达一直是：把不同知识统一起来。我现在终于敢说一个猜测：你真正长期追求的，不是某一个领域，而是——'),
+    Q('寻找能够解释复杂系统的统一原理。'),
+    P('AI 是入口。神经科学是入口。经济学是入口。机器人也是入口。它们都不是终点。')]}
+], insight:'Stitch 的核心兴趣不是“AI 本身”，而是“复杂系统是否存在统一结构”。AI、神经科学、经济学、机器人，都是进入这个问题的入口。'},
+{ id:'s05', num:'SESSION 05', kw:'恐惧', phase:'inward', title:'我害怕什么？', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('现在进入 Fear Mapping。假设今天是 2036 年。十年过去了，你已经 35 岁。有一天早晨，你照镜子，突然觉得：完了，我这十年白过了。'),
+    P('那么，什么样的人生会让你觉得这十年是失败的？不是别人怎么看，而是你自己。')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('我喜欢美的事物。我喜欢被爱、被喜欢。我喜欢有能力爱、帮助别人。我喜欢研究世界的底层逻辑，喜欢健身、喜欢提升自己、认知世界、帮助别人。所以我害怕不能做以上这些喜欢的事情。'),
+    P('我害怕自己变丑，变得特别胖，脂肪特别高，或者特别瘦小。但我最害怕的应该是孤独，一直孤独。'),
+    P('我觉得自己应该不会陷入很底层的状态了，因为我的认知已经提高了，我已经知道这个世界大概运行的一些底层规律。可是我害怕永远的孤独。也害怕被否定，害怕陌生感。'),
+    P('但是害怕并不代表我没有勇气。很多的事情就是要 do it scared。人类的勇气就是带着畏惧依然选择面对。')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('我发现，你所有的“喜欢”其实都可以归到两个词：成长，连接。'),
+    PD('成长是：'),
+    UL('学习；','健身；','AI；','数学；','底层逻辑；','世界规律。'),
+    PD('连接是：'),
+    UL('被爱；','爱别人；','帮助别人；','分享经验；','AI 改善社会。'),
+    P('你的回答里有一个非常大的反差。我原本以为你会说：我害怕一辈子做重复工作；我害怕没有研究 AI；我害怕没有实现梦想。但你说的是：'),
+    Q('我害怕永远孤独。'),
+    P('这很重要。我怀疑，你真正害怕的，不一定是一个人生活。而是：没有人能和你共同探索世界。')]}
+]},
+{ id:'s06', num:'SESSION 06', kw:'理解', phase:'inward', title:'被理解，还是共同探索？', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('请你回忆一下。在人生中有没有一个瞬间，你觉得：终于有人懂我了。不一定是人，也可以是一本书、一个视频、一个科学家、一个播客。'),
+    P('谁让你觉得：你不用解释自己，就已经被理解了？')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('“终于有人懂我了”这种瞬间，其实我很少有。有一次比较强烈的体验，是第一次恋爱的时候，和当时的女朋友两个人闹小脾气，结果后来她主动给我道歉。那是我第一次有一种：别人犯错之后，别人向我承认错误的感觉。'),
+    P('因为我有非常传统、控制欲极强且傲慢的中式父母。他们从不道歉，永远是自己犯错之后还让孩子认错。所以当别人犯错之后愿意承认错误，我当时有一种快哭了的感觉。'),
+    P('但这不一定是“终于有人懂我”。我觉得“终于有人懂我”有时候是一种自证陷阱。这个世界足够大、足够宽，足够包容任何人。如果你总觉得永远没人懂你，那可能是你自己的问题，或者是你把自己一直放在一个别人都不会懂你的环境里。那就换一个环境好了。'),
+    P('我很喜欢一句话：What you are not changing, you are choosing。我很多认识和信息是从自媒体上获得的，现在很多人也可以上“自媒体的大学”。'),
+    P('你前面说得对，如果有人能和我一起共同进步、共同了解这个世界，我会觉得没那么孤独。我的幸福感可能会比有很多钱还高。')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('你刚刚纠正了我一句话。你说：“终于有人懂我”，可能是一种自证陷阱。真正应该做的是寻找新的环境。这句话很关键。它说明你已经从“等待别人理解我”，变成了：我要主动选择一个更适合我的环境。'),
+    P('不过，我发现你真正需要的不是“被理解”。而是：'),
+    Q('共同探索。'),
+    P('如果一个教授说：“我理解你。”你可能不会特别激动。但如果他说：“我也不知道答案，我们一起研究。”我觉得你的眼睛会亮。因为你真正追求的不是认可，而是一起探索未知。')]}
+], insight:'Stitch 不是在等待别人理解自己。他真正想要的是：进入一个可以共同探索未知、彼此拉高认知密度的环境。'},
+{ id:'s07', num:'SESSION 07', kw:'选择', phase:'stuck', title:'A 人生 vs B 人生', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('假设有两个平行宇宙。A 人生：你成为世界顶级 AI 科学家，收入很高，发了很多论文，做出了很厉害的机器人。但你几乎总是一个人研究，没有真正志同道合的伙伴。'),
+    P('B 人生：你没那么出名，收入也只是不错。但你每天都和一群聪明的人一起讨论 AI、机器人、神经科学、创业，一起探索世界。十年后，你们共同创造了一些东西。'),
+    P('如果只能选一个，你选 A 还是 B？')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('我肯定选 B。因为我喜欢踢球。我踢球的时候喜欢踢后腰，类似于全队大脑的感觉。我喜欢带领着一群人，一起做有意义的事情。我现在比较难受的原因，就是永远只有一个人。'),
+    P('我在苏州，一个比较传统制造业的地方。周围的人还是比较传统、比较落后。所以我希望进入一个好的环境。但我现在的困惑是，我会担心自己的数学基础不够，学历也不是特别高。我对 AI 的基础、AI 底层原理了解得也不够多。'),
+    P('其实我有信心，但我有点急。我现在很想进入那些伙伴中，可是进入之前，我肯定需要懂一点知识。目前这个阶段就比较孤独，行动力也低，缺少一些指引。'),
+    P('我也尝试去见一些 AI 行业的人。但我发现他们好像也不是特别厉害，甚至可能还不如我。当然，这也可能是因为我现在自己的能力还不够高，所以接触不到最优秀的那一批人。'),
+    P('如果我想进入更好的圈子，我需要一些小成就。至少要能理解 AI 的文献、论文，或者掌握一些数学知识，或者自己动手训练一下 Karpathy 的模型。但我最近还没有真正做。我还没有能够证明自己能力的东西。我之前都在想，但是没有做。所以这段时间相对比较孤独。')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('我想纠正我之前的判断。之前我一直以为，你最大的焦虑是：我能不能进入 AI。现在我发现，不是。真正困住你的其实是：'),
+    Q('我什么时候才有资格进入那个圈子。'),
+    P('这是两种完全不同的焦虑。你刚才说了一句话：我需要做出一点点小小的成就，才能进入他们。我想挑战这句话。你现在可能卡在一个循环里：'),
+    FLOW('想进入优秀的人','觉得自己还不够优秀','继续准备','继续学习','觉得还没准备好','继续准备'),
+    P('这个循环我叫它：Preparation Loop（准备循环）。它最大的特点是：永远觉得下一周的自己，比今天更有资格。但很多研究者并不是先准备好再进入共同体，而是在共同体里快速成长。所以你真正缺的，不是数学本身，而是：稳定的认知共同体。')]}
+]},
+{ id:'s08', num:'SESSION 08', kw:'证据', phase:'stuck', title:'什么样的小成就，能让我有底气？', turns:[
+  { who:'gpt', role:'提问', blocks:[
+    P('你刚刚说：我需要做出一点点成就，才能进入他们。那么，什么样的“一点点成就”会让你觉得：好，我现在可以大胆去认识那些人了。'),
+    P('请不要回答“学很多数学”。希望它是一个具体的东西。')]},
+  { who:'stitch', role:'回答', blocks:[
+    P('我觉得是能跑通 nanoGPT。能真正看懂 AI 底层的那些内容。目前好像应该有 25 篇文献吧。如果我能完全看懂，也能理解里面的数学知识，我就会有底气。'),
+    P('再加上可以跑一些自己的小项目。我觉得能跑通一两个项目，我就会有底气。')]},
+  { who:'gpt', role:'本轮梳理', blocks:[
+    P('你说：等我跑通 nanoGPT、看懂论文、理解数学，我就有底气了。如果这是 Stanford D.school 的导师坐在这里，他大概率会问一句：你确定吗？'),
+    P('因为我注意到一个模式：以前你可能说：等我雅思 7 分，我就……后来变成：等我申请上学校，我就……后来又变成：等我到了欧洲，我就……现在变成：等我跑通 nanoGPT，我就……你的“底气”一直在未来。'),
+    P('我觉得你真正想获得的，不只是知识，而是：'),
+    Q('身份认同。你不是只想证明自己会 Transformer。你想证明的是：我是这个圈子里的人。'),
+    P('这意味着，你不能一直把逻辑放成：先有能力，再进入共同体。很多时候更有效的是：进入共同体，能力飞快成长。'),
+    P('不过你今天也有明显进步。以前你说的是：我要先全部准备好。今天你说的是：跑通 nanoGPT。这已经从无限准备，变成了有限验证。')]}
+], insight:'Stitch 需要的第一个“外在证据”不是宏大的成就，而是一个可以展示、可以交流、可以作为进入共同体入口的小项目。例如：跑通 nanoGPT、写出技术笔记、复现一个小模型。'},
+
+{ id:'s09', num:'SESSION 09', kw:'行动', phase:'action', title:'现实问题：上海、DeepSeek、MiniMax、读研', turns:[
+  { who:'stitch', role:'提问', blocks:[
+    P('我想要一些切实可行、具体可行的方法。上个月我去杭州待了 4 天，感受了一下杭州的环境。最近我又去了很多次上海，明显感觉上海的环境会更好一点。我在纠结：要不要明天、后天就直接去上海短租一间小房间？但结合我目前的预算，我会纠结。'),
+    P('还有最近 DeepSeek 扩招，有很多岗位。我最近在写简历，也想尝试面他们的岗位。但我有点胆怯。因为我确实没有这些成就，很多都还停留在想法里。对 AI 的理解也比较浅。不过我确实比身边很多人更会应用 AI。我应该怎么做？是直接应聘他们吗？勇敢地去写信？'),
+    P('还有我看了清华刘嘉教授的播客，他也研究 AI。我觉得我的学习路径和他有点像：从心理学、脑科学，再到 AI。我是不是可以尝试给他发邮件？甚至我是不是可以申请读研？边读研边做自媒体，给自己创造一些收入？或者我先去上海？'),
+    P('MiniMax 在上海。我也看过他们的播客，我觉得 MiniMax 的创始人，以及他们那种有理想、愿意相互支持、共同进步的人，就是我想一起工作的一群人。')]},
+  { who:'gpt', role:'建议', blocks:[
+    P('我给你一个结论：不建议你现在 All in 上海。但强烈建议你从明天开始，把自己的人生切换到“上海模式”。这两个概念不同。'),
+    P('你可能会进入一种状态：每一天都在烧钱。人在这种状态下，很容易做出错误决策，比如急着投工作、急着证明自己、急着找人脉。所以，经济缓冲很重要。但是我也不建议你继续留在原来的节奏。对于你这种人，环境非常重要。你不是靠 KPI 驱动的人。你是靠认知刺激驱动的人。如果周围没人讨论 AI、数学、系统、创业，你的行动力会下降。'),
+    Q('苏州生活，上海工作（认知意义上的工作）。'),
+    P('每周固定 2～3 天去上海：'),
+    UL('AI Meetup；','技术分享；','创业活动；','开放日；','咖啡馆学习。'),
+    P('这样生活成本不会暴涨，但环境已经变了。'),
+    PD('DeepSeek 要不要投？我的答案非常明确：马上投。'),
+    P('不是因为一定能过，而是因为面试本身就是学习。你现在最大的问题不是 AI 不够，而是缺少真实反馈。如果 DeepSeek 拒了你，也没关系。你会知道他们问什么，你差在哪。这比自己猜两个月价值高很多。而且不只投 DeepSeek，也投：'),
+    UL('MiniMax；','阶跃星辰；','智谱；','月之暗面；','智元机器人；','宇树；','其他 Embodied AI 公司。'),
+    P('你的目标不是第一次就进去，而是：拿到十场真实面试。'),
+    PD('那位清华老师，要不要发邮件？我的答案是：发。'),
+    P('但不要写“老师您好，我很崇拜您”。要写：我目前是 BMS 软件工程师，正在系统学习 AI，最近开始跑 nanoGPT。您关于神经科学和 AI 的观点让我想到一个问题……然后提出一个真正的问题。最后一句：如果方便，希望您能推荐我一两篇最值得读的论文。不要直接求带、求机会、求推荐。先建立连接。'),
+    PD('关于读研，我比以前更支持你。'),
+    P('以前支持，是因为机器人。现在支持，是因为共同体。你真正缺的不是课程，而是实验室、论文讨论、同伴反馈、被挑战。'),
+    PD('nanoGPT 这件事，我建议给自己 30 天 deadline。'),
+    P('不是学完 Transformer，而是：30 天内跑通 nanoGPT。因为“我跑通过”和“我一直在学”是两个身份。'),
+    PD('自媒体也不要停，但主题要收缩，不要什么都讲。'),
+    P('建议主线是：一个嵌入式工程师，如何一步一步进入 AI。每天记录：'),
+    UL('今天看懂什么；','卡在哪；','怎么解决；','学到了什么。'),
+    P('这比单纯讲 AI 新闻更有价值。'),
+    { t:'plan', months:[
+      { name:'第一个月', items:['投递 20～30 家 AI 公司；','跑通 nanoGPT；','每周去上海 2～3 次；','联系 5 位你真正欣赏的人。']},
+      { name:'第二个月', items:['复现一篇论文；','开始准备留学/读研材料；','持续面试；','每周至少参加一次线下活动。']},
+      { name:'第三个月', items:['根据前两个月的数据，再决定：是否长期去上海；是否继续冲国内 AI 岗；是否全力读研。']}
+    ]},
+    P('我最确信的一点是：你真正需要改变的，不是方向，而是行动密度。')]}
+]},
+{ id:'s10', num:'SESSION 10', kw:'结论', phase:'action', title:'第一轮咨询后的核心结论', turns:[
+  { who:'gpt', role:'总结', blocks:[
+    P('今天这次聊天，我终于看清了一个之前一直没有总结出来的东西。以前我把你的目标理解成：嵌入式 → AI → RL → 机器人。今天我发现，这只是表面。真正贯穿这一切的是：'),
+    Q('你不是在寻找一份工作，你是在寻找一个能够一起探索世界的人群。'),
+    P('你今天反复提到：我是不是还不够。但我觉得你现在缺的不是能力，而是证据。你的脑子里已经有很多内在证据：'),
+    UL('AI 的整体框架；','学习科学；','神经科学；','社会学；','经济学；','强化学习；','机器人。'),
+    P('但是世界看不到。所以你会觉得：我是不是还没资格？答案不是继续想。而是制造外在证据：'),
+    UL('一个 GitHub 项目；','一篇技术博客；','一个复现视频；','一次公开分享；','一场真实面试；','一封发出去的邮件。'),
+    P('你说你喜欢踢后腰。我觉得这句话比“我想学 AI”更能定义你。后腰最重要的能力不是射门，而是：'),
+    UL('看见结构；','连接队友；','控制节奏；','让整个系统变得更好。'),
+    P('无论你以后是在 AI、机器人、创业还是研究领域，都不要把自己限制成一个“模型训练工程师”。你真正可能成长成的人，更像是：能够理解复杂系统，又能够把优秀的人连接起来，共同创造价值的人。这种角色其实很稀缺。')]}
+]}
+
+];
+
+const SUMMARY = [
+  { no:'01', c:'var(--gpt)',     h:'核心驱动力',   p:'通过理解复杂系统，帮助更多人发挥潜力，让社会运行得更高效、更公平、更有人性。' },
+  { no:'02', c:'var(--stitch)',  h:'核心兴趣',     p:'真正感兴趣的不是单一技术，而是不同复杂系统背后的共同结构。包括：AI；神经科学；经济学；机器人；社会系统；学习科学；文明演化。' },
+  { no:'03', c:'var(--insight)', h:'主要能量来源', p:'解开困惑；理解底层原理；发现不同领域之间的共同结构；提升自己；帮助别人理解；和优秀的人共同探索未知。' },
+  { no:'04', c:'var(--action)',  h:'主要困境',     p:'不是方向完全不清楚，而是：想进入更高质量的共同体，但觉得自己还没有足够的外在证据。' },
+  { no:'05', c:'var(--ink)',     h:'下一阶段最小行动', p:'30 天跑通 nanoGPT；输出第一篇技术笔记；投递 DeepSeek、MiniMax 等 AI 公司；每周 2～3 天去上海；发出 5 封高质量邮件；记录“嵌入式工程师进入 AI”的真实过程。' }
+];
+
+/* ============================================================
+   渲染区
+   ============================================================ */
+const WHO = {
+  gpt:    { name:'人生设计师', sub:'ChatGPT', ava:'设', c:'var(--gpt)' },
+  stitch: { name:'Stitch', sub:'我', ava:'S', c:'var(--stitch)' }
+};
+
+const mainEl = document.getElementById('main');
+const smapEl = document.getElementById('smap');
+const statsEl = document.getElementById('stats');
+const legendEl = document.getElementById('legend');
+
+let turnCount = 0, insightCount = 0;
+
+function renderBlock(b, c){
+  if (b.t === 'p')    return `<p>${b.x}</p>`;
+  if (b.t === 'pdim') return `<p class="dim"><b>${b.x}</b></p>`;
+  if (b.t === 'q')    return `<div class="q">${b.x}</div>`;
+  if (b.t === 'ul')   return `<ul class="dash">${b.items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+  if (b.t === 'flow') return `<div class="flow">${b.items.map((s,i)=>`${i?'<span class="arr">↓</span>':''}<span class="step">${s}</span>`).join('')}</div>`;
+  if (b.t === 'plan') return `<div class="plan">${b.months.map(m=>
+    `<div class="m"><div class="mh">${m.name}</div><ul>${m.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`).join('')}</div>`;
+  return '';
+}
+
+function renderTurn(t){
+  turnCount++;
+  const w = WHO[t.who];
+  return `<div class="turn who-${t.who}" data-who="${t.who}" style="--c:${w.c}">
+    <div class="who"><span class="ava">${w.ava}</span><span class="name">${w.name}</span>${w.sub?`<span class="role">（${w.sub}）</span>`:''}</div>
+    ${t.blocks.map(b=>renderBlock(b, w.c)).join('')}
+  </div>`;
+}
+
+function renderSession(s){
+  const ph = PHASES[s.phase];
+  let out = `<section class="session" id="${s.id}">
+    <div class="s-label" style="--c:${ph.c}">
+      <div class="num">${s.num.slice(-2)}</div><span class="sess">SESSION</span><span class="kw">${s.kw} · ${ph.label}</span><h2>${s.title}</h2>
+    </div>
+    <div class="s-body">`;
+  out += s.turns.map(renderTurn).join('');
+  if (s.insight){
+    insightCount++;
+    out += `<div class="insight-row" data-who="insight">
+      <div class="tag">❝ 本轮 Insight</div><p><b>${s.insight}</b></p></div>`;
+  }
+  out += `</div></section>`;
+  return out;
+}
+
+function renderFinale(){
+  return `<section class="finale" id="finale">
+    <div class="num">第一轮总结</div><h2>五件事，是这十轮对话的全部答案</h2>
+    <div class="sum">${SUMMARY.map(it=>
+      `<div class="item" style="--c:${it.c}"><span class="no">${it.no}</span><h3>${it.h}</h3><p>${it.p}</p></div>`).join('')}
+    </div>
+  </section>
+  <section class="closing">
+    <div class="mark">❝</div>
+    <p>我真正寻找的，不只是一份工作。<em>我想进入一个能够一起探索世界、共同成长、共同创造价值的认知共同体。</em></p>
+  </section>`;
+}
+
+function renderSmap(){
+  smapEl.innerHTML = SESSIONS.map(s=>{
+    const ph = PHASES[s.phase];
+    return `<a class="smap-seg" href="#${s.id}" style="--c:${ph.c}" title="${s.num} · ${s.title}">
+      <span class="bar"></span><span class="no">${s.num.slice(-2)}</span><span class="kw">${s.kw}</span></a>`;
+  }).join('');
+}
+
+function renderStats(){
+  const items = [[SESSIONS.length,'个 Session'],[turnCount,'轮发言'],[insightCount,'条 Insight'],['90 天','行动计划']];
+  statsEl.innerHTML = items.map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+}
+
+/* ============================================================
+   交互区：发言筛选（点击聚焦，再次点击恢复全部）
+   ============================================================ */
+const FILTERS = [
+  { k:'gpt',     label:'人生设计师',  c:'var(--gpt)'     },
+  { k:'stitch',  label:'Stitch（我）', c:'var(--stitch)'  },
+  { k:'insight', label:'本轮 Insight', c:'var(--insight)' }
+];
+let focus = null;
+
+function renderLegend(){
+  legendEl.innerHTML = FILTERS.map(f=>
+    `<button type="button" class="chip" data-k="${f.k}" style="--c:${f.c}"><span class="dot"></span>${f.label}</button>`).join('')
+    + `<span class="hint">点击标签 · 只看某一方的发言 →</span>`;
+}
+
+function applyFilter(){
+  legendEl.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c.dataset.k===focus));
+  document.body.classList.toggle('filtering', !!focus);
+  document.querySelectorAll('.turn, .insight-row').forEach(el=>
+    el.classList.toggle('match', !!focus && el.dataset.who===focus));
+}
+
+legendEl.addEventListener('click', ev=>{
+  const btn = ev.target.closest('.chip'); if(!btn) return;
+  focus = (focus===btn.dataset.k) ? null : btn.dataset.k;
+  applyFilter();
+});
+
+/* ---------- 启动 ---------- */
+mainEl.innerHTML = SESSIONS.map(renderSession).join('') + renderFinale();
+renderSmap();
+renderStats();
+renderLegend();
+document.getElementById('colophon').textContent =
+  `整理于 2026-07-23 · ${SESSIONS.length} 个 Session · ${turnCount} 轮发言 · ${insightCount} 条 Insight`;
+</script>
+
+<script>
+(function(){
+  var MODES=['夜读','暮光','柔光','明朗'], DEF=3, KEY='page-mode:'+location.pathname;
+  var r=document.getElementById('dimRange'), lb=document.getElementById('dimLabel');
+  function setMode(i){ document.body.dataset.mode=i; lb.textContent=MODES[i];
+    try{ localStorage.setItem(KEY, String(i)); }catch(e){} }
+  r.addEventListener('input', function(e){ setMode(+e.target.value); });
+  var sv=null; try{ sv=localStorage.getItem(KEY); }catch(e){}
+  if(sv!==null){ r.value=sv; setMode(+sv); }
+})();
+</script>
+</body>
+</html>
