@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>人生设计师 · 一场与 AI 的十轮对话</title>
+<title>人生设计师 · 风格 L · 午夜蓝金</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=IBM+Plex+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
@@ -173,52 +173,90 @@ body.filtering .turn.match, body.filtering .insight-row.match{opacity:1}
 .back-home{position:fixed;left:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:8px 16px;font-size:12.5px;text-decoration:none;font-family:var(--sans);box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .back-home:hover{color:var(--ink);border-color:var(--ink-3)}
 
-/* 明暗调节（右下滑杆，记忆档位） */
+/* ============================================================
+   高级感 · Editorial 基底（覆盖于温暖基底之上）
+   ============================================================ */
+body{font-size:15.5px;line-height:1.95;letter-spacing:.012em}
+.wrap{max-width:860px;padding:0 34px}
+.eyebrow{font-size:10px;letter-spacing:.46em}
+.hero h1{font-weight:500;font-size:clamp(42px,6.4vw,72px);line-height:1.16;letter-spacing:0}
+.thesis{font-size:15px;line-height:2}
+.stats{gap:44px}
+.smap-seg .bar{height:3px;border-radius:0;opacity:1}
+.session{padding:64px 0 20px;gap:52px}
+.s-label h2{font-weight:600;letter-spacing:.02em}
+.turn{margin:0 0 26px;padding:28px 30px 30px;border:1px solid var(--rule);border-left:1px solid var(--rule);border-radius:0;background:transparent;box-shadow:none}
+.turn .who{margin-bottom:14px}
+.turn .ava{width:27px;height:27px;font-size:12px}
+.turn .who .name{font-weight:600;letter-spacing:.06em;color:var(--c)}
+.turn p{font-size:15px;line-height:1.95}
+.turn .q{background:transparent;border-radius:0;border-left:2px solid var(--c);padding:6px 0 6px 24px;font-size:18px;font-weight:500;line-height:1.85}
+.turn ul.dash li::before{width:5px;height:5px;border-radius:0;background:var(--c)}
+.insight-row{border:1px solid var(--rule);border-left:2px solid var(--insight);border-radius:0;background:transparent;padding:20px 24px}
+.plan .m{border-radius:0;background:transparent;border:1px solid var(--rule)}
+.sum .item{border-radius:0;background:transparent;border:1px solid var(--rule)}
+.chip{border-radius:0;background:transparent;font-size:12px;letter-spacing:.1em;padding:7px 16px 7px 12px}
+.chip.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.flow .step{border-radius:0}
+.back-home{border-radius:0;background:var(--paper);box-shadow:none}
+
+/* L · 午夜蓝金 Midnight Atelier —— 深炭夜色 + 黄铜金 */
 :root{
---paper0:var(--paper);--card0:var(--card);--ink0:var(--ink);--ink20:var(--ink-2);--ink30:var(--ink-3);
---rule0:var(--rule);--rule20:var(--rule-2);
---gpt0:var(--gpt);--stitch0:var(--stitch);--insight0:var(--insight);--action0:var(--action);
+  --paper:#14161A;--card:#1B1E24;--ink:#E9E4D8;--ink-2:#A39D8F;--ink-3:#6F6A5F;
+  --rule:#2B2F37;--rule-2:#23262D;
+  --gpt:#AAB39B;--stitch:#C6A15B;--insight:#C6A15B;--action:#8290A0;
+  --serif:"Cormorant Garamond","Noto Serif SC","Songti SC","STSong",serif;
 }
-.dimmer{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--rule);border-radius:999px; padding:9px 16px;font-size:12px;color:var(--ink-2);font-family:var(--sans);letter-spacing:.08em}
+.hero h1 em{color:#C6A15B;font-style:normal}
+.turn{background:var(--card)}
+.turn .ava{background:transparent;border:1px solid var(--c);color:var(--c);border-radius:0}
+.turn .q{background:transparent}
+.chip{color:var(--ink-2)}
+.s-label .num{color:#C6A15B}
+.finale{border-top:1px solid #C6A15B}
+::selection{background:#C6A15B;color:#14161A}
+
+
+/* ============================================================
+   明暗调节：深夜 → 暮蓝 → 雾蓝 → 晨白（右下滑杆）
+   ============================================================ */
+.dimmer{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--rule);padding:9px 16px;font-size:12px;color:var(--ink-2);font-family:var(--sans);letter-spacing:.08em}
 .dimmer span{color:var(--ink-3)}
 .dimmer input[type=range]{width:96px;accent-color:var(--insight);cursor:pointer}
 .dimmer b{font-weight:600;color:var(--ink);min-width:2.2em;text-align:center}
 body{transition:background .35s,color .35s}
 .turn,.insight-row,.plan .m,.sum .item,.chip,.dimmer,.back-home,.turn .q{transition:opacity .18s,background .35s,border-color .35s,color .35s}
-
-body[data-mode="2"]{
---paper:color-mix(in srgb,var(--paper0) 90%,#20242A);--card:color-mix(in srgb,var(--card0) 90%,#20242A);
---rule:color-mix(in srgb,var(--rule0) 88%,#20242A);--rule-2:color-mix(in srgb,var(--rule20) 88%,#20242A);
-}
 body[data-mode="1"]{
---paper:color-mix(in srgb,var(--paper0) 20%,#22262D);--card:color-mix(in srgb,var(--card0) 15%,#282D35);
---ink:color-mix(in srgb,var(--ink0) 12%,#F4F0E6);--ink-2:color-mix(in srgb,var(--ink20) 24%,#E6E1D5);
---ink-3:color-mix(in srgb,var(--ink30) 38%,#CFC9BC);
---rule:color-mix(in srgb,var(--rule0) 26%,#4C525B);--rule-2:color-mix(in srgb,var(--rule20) 26%,#41474F);
---gpt:color-mix(in srgb,var(--gpt0) 74%,#FFFFFF);--stitch:color-mix(in srgb,var(--stitch0) 74%,#FFFFFF);
---insight:color-mix(in srgb,var(--insight0) 74%,#FFFFFF);--action:color-mix(in srgb,var(--action0) 74%,#FFFFFF);
+  --paper:#262A32;--card:#2F343E;--ink:#E8E3D7;--ink-2:#ACA696;--ink-3:#7E796C;
+  --rule:#3B414B;--rule-2:#343943;
 }
-body[data-mode="0"]{
---paper:color-mix(in srgb,var(--paper0) 9%,#14161A);--card:color-mix(in srgb,var(--card0) 11%,#1E2127);
---ink:#ECE7DB;--ink-2:#B6B0A1;--ink-3:#807B6E;
---rule:color-mix(in srgb,var(--rule0) 13%,#3C414A);--rule-2:color-mix(in srgb,var(--rule20) 11%,#33373F);
---gpt:color-mix(in srgb,var(--gpt0) 68%,#FFFFFF);--stitch:color-mix(in srgb,var(--stitch0) 68%,#FFFFFF);
---insight:color-mix(in srgb,var(--insight0) 70%,#FFFFFF);--action:color-mix(in srgb,var(--action0) 70%,#FFFFFF);
+body[data-mode="2"]{
+  --paper:#494E58;--card:#545A65;--ink:#ECE7DB;--ink-2:#C2BCAD;--ink-3:#8B867A;
+  --rule:#666C79;--rule-2:#5B616C;
 }
-.insight-row{background:color-mix(in srgb, var(--insight) 8%, var(--card));border-color:color-mix(in srgb, var(--insight) 28%, var(--card))}
+body[data-mode="3"]{
+  --paper:#F1EFE8;--card:#FBF9F4;--ink:#25292F;--ink-2:#5C6067;--ink-3:#98968E;
+  --rule:#DEDBD2;--rule-2:#E8E5DB;
+  --gpt:#5F7355;--stitch:#96742E;--insight:#96742E;--action:#66788C;
+}
+body[data-mode="3"] .hero h1 em{color:#96742E}
+body[data-mode="3"] .s-label .num{color:#96742E}
+body[data-mode="3"] .finale{border-top-color:#96742E}
 
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="dimmer" title="调节明暗"><span>夜</span><input type="range" min="0" max="3" step="1" value="3" id="dimRange"><span>昼</span><b id="dimLabel">明朗</b></div>
+<div class="dimmer" title="调节明暗"><span>夜</span><input type="range" min="0" max="3" step="1" value="0" id="dimRange"><span>昼</span><b id="dimLabel">深夜</b></div>
 
 <a class="back-home" href="index.html">← 风格目录</a>
 
 <header class="hero"><div class="wrap">
   <div class="eyebrow">2026.07.09 · 10 个 Session · 一场与 AI 的人生设计对话</div>
   <h1>人生设计师<br><em>让 AI 帮助我打开自己的内心深处</em></h1>
-  <p class="thesis">起因是看了@数字生命卡兹克发的一篇人生设计师 Prompt 的推文，很受触动。自己最近也有一些迷茫，于是尝试了一下。以下是我和「人生设计师」的完整对话——从给健康、工作、娱乐、爱与连接打分开始，一路问到：<b>如果没有收入压力，你愿意花十年去理解的一件事是什么？</b></p>
-  <p class="thesis">十轮对话最后的收束是同一句话：<b>我真正寻找的，不只是一份工作，而是一个能够一起探索世界、共同成长、共同创造价值的认知共同体。</b></p>
+  <p class="thesis">起因是看了@数字生命卡兹克发的一篇人生设计师 Prompt 的推文，很受触动。自己最近也有一些迷茫，于是也尝试了一下，在这里先感谢卡兹克的分享。以下是我和「人生设计师」的对话。</p>
+  <p class="thesis">（我回答的部分是语音输入，表达不是很精炼，稍微让 AI 删减了一些口头禅并改动了排版，可能稍微有一点 AI 味。）</p>
+  <p class="thesis">十轮对话最后的收束是同一句话：<b>我真正寻找的，不只是一份工作，而是一群能够一起探索世界、共同成长、共同创造价值的伙伴。</b></p>
 
   <div class="smap">
     <div class="smap-label"><span>SESSION 01 · 定位</span><span>点击跳转 · 结论 · SESSION 10</span></div>
@@ -288,7 +326,7 @@ const SESSIONS = [
     P('心流的话，我好像只有练书法、写字的时候进入过。学习的过程中也有，尤其是解惑的时候——当自己的困惑被解除，我会很开心。'),
     P('比如我经常听近代史、政治经济、历史事件、经济学、社会学、心理学这些内容。因为我对世界有好奇，也对自己的生活有困惑。生活有困扰的时候，通过学习把困惑解开，这个过程就会很开心。最近学习新技术、学习 AI，我也挺开心的。'),
     P('不过我现在好像更多是在学习怎么使用 AI 工具。我真正想学的是 AI 的底层原理。这个可能有点难，但我不怕。'),
-    P('我高中以前数学超级好。并不是说我喜欢计算、算术很快，而是我有联想的能力。尤其做奥数题的时候，我会发现一件事、两件事、三件事之间有相似的结构。大脑对这种相似的结构，其实是有很微弱的、转瞬即逝的感觉的。慢慢捕捉这种感觉，时时刻刻在脑子里转，💡 一瞬间它们之间会联想起来，可能问题就有了解决思路。'),
+    P('我高中以前数学特别好。虽然我不是很喜欢计算，但我喜欢推理，也有很自然的联想能力。尤其做奥数题的时候，或者做几何证明的时候，我会发现一件事、两件事、三件事之间有相似的结构。大脑对这种相似的结构，其实是有很微弱的、转瞬即逝的感觉的。慢慢捕捉这种感觉，时时刻刻在脑子里转，💡 一瞬间它们之间会联想起来，可能问题就有了解决思路。'),
     P('所以我最近学习 AI 需要学数学，我一点都不怕，我反而非常兴奋。我觉得这是一个契机，可以让我重新捡起数学。尤其是 AI for math 的领域出现，让我感到超级兴奋。'),
     P('我特别喜欢研究事物的底层原理。一件事情发生的底层原因，世界运行的底层逻辑。（这好像解释了为什么最近 AI 创业潮很热，我明明有想法、有能力，但做起来总是感觉没有别人那么热情，总感觉有更重要的事情没有做，有不安。原来我更好奇、更想研究的，是 AI 模型的底层原理，是如何创造出 AI。）'),
     P('我也喜欢用脑科学、神经科学的知识帮助自己成为自己想成为的样子。比如健身、学习，我会用一些脑科学和神经科学的方法，让自己更自然地去做那些事情，而不是靠强迫自己自律。我会固定学习和休息的场所，自己做饭，吃健康的食物，让身体舒服。睡觉的时候，我会让晚上空调开冷一点，便于入睡；早上起床前几个小时，定时打开加热风扇，这样起床以后身体会更有能量，整个人的状态会很棒。'),
@@ -521,7 +559,7 @@ function renderFinale(){
   </section>
   <section class="closing">
     <div class="mark">❝</div>
-    <p>我真正寻找的，不只是一份工作。<em>我想进入一个能够一起探索世界、共同成长、共同创造价值的认知共同体。</em></p>
+    <p>我真正寻找的，不只是一份工作。<em>我想找到一群能够一起探索世界、共同成长、共同创造价值的伙伴。</em></p>
   </section>`;
 }
 
@@ -578,13 +616,13 @@ document.getElementById('colophon').textContent =
 
 <script>
 (function(){
-  var MODES=['夜读','暮光','柔光','明朗'], DEF=3, KEY='page-mode:'+location.pathname;
+  var MODES=['深夜','暮蓝','雾蓝','晨白'];
   var r=document.getElementById('dimRange'), lb=document.getElementById('dimLabel');
   function setMode(i){ document.body.dataset.mode=i; lb.textContent=MODES[i];
-    try{ localStorage.setItem(KEY, String(i)); }catch(e){} }
+    try{ localStorage.setItem('midnight-mode', String(i)); }catch(e){} }
   r.addEventListener('input', function(e){ setMode(+e.target.value); });
-  var sv=null; try{ sv=localStorage.getItem(KEY); }catch(e){}
-  if(sv!==null){ r.value=sv; setMode(+sv); }
+  try{ var sv=localStorage.getItem('midnight-mode');
+    if(sv!==null){ r.value=sv; setMode(+sv); } }catch(e){}
 })();
 </script>
 </body>

@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>人生设计师 · 手账日记</title>
+<title>人生设计师 · 一场与 AI 的十轮对话</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=IBM+Plex+Sans+SC:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&family=Long+Cang&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=IBM+Plex+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    设计令牌：温暖纸质读物 · 一场走心的对话
@@ -168,32 +168,6 @@ body.filtering .turn.match, body.filtering .insight-row.match{opacity:1}
   .hint{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
-/* ===== 主题 D · 手账日记 覆盖 ===== */
-:root{
-  --paper:#FDFAF2; --card:#FFFFFF; --ink:#463F33; --ink-2:#7A7060; --ink-3:#B0A48D;
-  --rule:#EDE4CE; --rule-2:#F2EAD6;
-  --gpt:#88A878; --stitch:#D08C60; --insight:#C9A227; --action:#8BA3B8;
-}
-.hero h1,.s-label h2,.s-label .num,.finale h2,.closing p,.closing .mark,.stat b,.turn .q{font-family:"Long Cang","Noto Serif SC",cursive;font-weight:400;letter-spacing:.04em}
-.hero h1 em,.closing p em{color:#C58A4A}
-.s-label .num{color:#EBD9B4;font-size:48px;transform:rotate(-2deg);display:inline-block}
-.closing .mark{color:#EBD9B4}
-.smap-seg .bar{height:10px}
-.session{border-top:2px dashed #DCCFAE}
-.s-label .kw{background:#F8ECCE;color:#8A6D3B;border-radius:4px}
-.turn{border-radius:6px;box-shadow:2px 3px 0 rgba(70,63,51,.06);position:relative}
-.turn::before{
-  content:"";position:absolute;top:-9px;left:32px;width:64px;height:18px;
-  background:color-mix(in srgb, var(--c) 22%, #FFF6DC);
-  border:1px dashed color-mix(in srgb, var(--c) 35%, #fff);
-  transform:rotate(-1.6deg);border-radius:2px;opacity:.9;
-}
-.turn .q{background:#FFF6DC;border:2px dashed #E4CD90;border-radius:6px;font-size:21px;color:#6B5320}
-.turn ul.dash li::before{border-radius:50%}
-.insight-row{background:#FDF3D7;border:2px dashed #E4CD90;border-radius:6px}
-.flow .step{background:#FFFDF4}
-::selection{background:#F6E7C6}
-
 
 /* 回退到风格目录 */
 .back-home{position:fixed;left:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--ink-2);border:1px solid var(--rule);border-radius:999px;padding:8px 16px;font-size:12.5px;text-decoration:none;font-family:var(--sans);box-shadow:0 2px 8px rgba(0,0,0,.06)}
@@ -243,8 +217,9 @@ body[data-mode="0"]{
 <header class="hero"><div class="wrap">
   <div class="eyebrow">2026.07.09 · 10 个 Session · 一场与 AI 的人生设计对话</div>
   <h1>人生设计师<br><em>让 AI 帮助我打开自己的内心深处</em></h1>
-  <p class="thesis">起因是看了@数字生命卡兹克发的一篇人生设计师 Prompt 的推文，很受触动。自己最近也有一些迷茫，于是尝试了一下。以下是我和「人生设计师」的完整对话——从给健康、工作、娱乐、爱与连接打分开始，一路问到：<b>如果没有收入压力，你愿意花十年去理解的一件事是什么？</b></p>
-  <p class="thesis">十轮对话最后的收束是同一句话：<b>我真正寻找的，不只是一份工作，而是一个能够一起探索世界、共同成长、共同创造价值的认知共同体。</b></p>
+  <p class="thesis">起因是看了@数字生命卡兹克发的一篇人生设计师 Prompt 的推文，很受触动。自己最近也有一些迷茫，于是也尝试了一下，在这里先感谢卡兹克的分享。以下是我和「人生设计师」的对话。</p>
+  <p class="thesis">（我回答的部分是语音输入，表达不是很精炼，稍微让 AI 删减了一些口头禅并改动了排版，可能稍微有一点 AI 味。）</p>
+  <p class="thesis">十轮对话最后的收束是同一句话：<b>我真正寻找的，不只是一份工作，而是一群能够一起探索世界、共同成长、共同创造价值的伙伴。</b></p>
 
   <div class="smap">
     <div class="smap-label"><span>SESSION 01 · 定位</span><span>点击跳转 · 结论 · SESSION 10</span></div>
@@ -314,7 +289,7 @@ const SESSIONS = [
     P('心流的话，我好像只有练书法、写字的时候进入过。学习的过程中也有，尤其是解惑的时候——当自己的困惑被解除，我会很开心。'),
     P('比如我经常听近代史、政治经济、历史事件、经济学、社会学、心理学这些内容。因为我对世界有好奇，也对自己的生活有困惑。生活有困扰的时候，通过学习把困惑解开，这个过程就会很开心。最近学习新技术、学习 AI，我也挺开心的。'),
     P('不过我现在好像更多是在学习怎么使用 AI 工具。我真正想学的是 AI 的底层原理。这个可能有点难，但我不怕。'),
-    P('我高中以前数学超级好。并不是说我喜欢计算、算术很快，而是我有联想的能力。尤其做奥数题的时候，我会发现一件事、两件事、三件事之间有相似的结构。大脑对这种相似的结构，其实是有很微弱的、转瞬即逝的感觉的。慢慢捕捉这种感觉，时时刻刻在脑子里转，💡 一瞬间它们之间会联想起来，可能问题就有了解决思路。'),
+    P('我高中以前数学特别好。虽然我不是很喜欢计算，但我喜欢推理，也有很自然的联想能力。尤其做奥数题的时候，或者做几何证明的时候，我会发现一件事、两件事、三件事之间有相似的结构。大脑对这种相似的结构，其实是有很微弱的、转瞬即逝的感觉的。慢慢捕捉这种感觉，时时刻刻在脑子里转，💡 一瞬间它们之间会联想起来，可能问题就有了解决思路。'),
     P('所以我最近学习 AI 需要学数学，我一点都不怕，我反而非常兴奋。我觉得这是一个契机，可以让我重新捡起数学。尤其是 AI for math 的领域出现，让我感到超级兴奋。'),
     P('我特别喜欢研究事物的底层原理。一件事情发生的底层原因，世界运行的底层逻辑。（这好像解释了为什么最近 AI 创业潮很热，我明明有想法、有能力，但做起来总是感觉没有别人那么热情，总感觉有更重要的事情没有做，有不安。原来我更好奇、更想研究的，是 AI 模型的底层原理，是如何创造出 AI。）'),
     P('我也喜欢用脑科学、神经科学的知识帮助自己成为自己想成为的样子。比如健身、学习，我会用一些脑科学和神经科学的方法，让自己更自然地去做那些事情，而不是靠强迫自己自律。我会固定学习和休息的场所，自己做饭，吃健康的食物，让身体舒服。睡觉的时候，我会让晚上空调开冷一点，便于入睡；早上起床前几个小时，定时打开加热风扇，这样起床以后身体会更有能量，整个人的状态会很棒。'),
@@ -547,7 +522,7 @@ function renderFinale(){
   </section>
   <section class="closing">
     <div class="mark">❝</div>
-    <p>我真正寻找的，不只是一份工作。<em>我想进入一个能够一起探索世界、共同成长、共同创造价值的认知共同体。</em></p>
+    <p>我真正寻找的，不只是一份工作。<em>我想找到一群能够一起探索世界、共同成长、共同创造价值的伙伴。</em></p>
   </section>`;
 }
 
