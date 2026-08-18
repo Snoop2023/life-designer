@@ -25,10 +25,10 @@
 
 | 风格 | 预览 | 特点 | 直达链接 |
 |:---:|:---:|:---|:---:|
-| **A · 手账日记** | 📒 手写字标题、胶带贴纸、虚线边框 | 像翻开一页写给自己的私人日记。 | [打开 →](https://snoop2023.github.io/life-designer/A-手账日记.html) |
-| **B · 午夜蓝金** | 🌙 深炭夜色衬黄铜金，发丝线衬线排印 | 四档明暗滑杆，一页装下整个昼夜色域。 | [打开 →](https://snoop2023.github.io/life-designer/B-午夜蓝金.html) |
-| **C · 杂志特稿** | 📰 等宽标签 + 900 粗黑标题 + 红色点睛 | 黑白灰的特稿排印，锐利有态度。 | [打开 →](https://snoop2023.github.io/life-designer/C-杂志特稿.html) |
-| **D · 温暖读物** | 🍂 奶油纸底 + 衬线 + 圆角对话卡 | 像睡前翻的散文集。拉到夜读档，即是深夜书房。 | [打开 →](https://snoop2023.github.io/life-designer/D-温暖读物.html) |
+| **A · 杂志特稿** | 📰 等宽标签 + 900 粗黑标题 + 红色点睛 | 黑白灰的特稿排印，锐利有态度。 | [打开 →](https://snoop2023.github.io/life-designer/A-杂志特稿.html) |
+| **B · 手账日记** | 📒 手写字标题、胶带贴纸、虚线边框 | 像翻开一页写给自己的私人日记。 | [打开 →](https://snoop2023.github.io/life-designer/B-手账日记.html) |
+| **C · 温暖读物** | 🍂 奶油纸底 + 衬线 + 圆角对话卡 | 像睡前翻的散文集。拉到夜读档，即是深夜书房。 | [打开 →](https://snoop2023.github.io/life-designer/C-温暖读物.html) |
+| **D · 午夜蓝金** | 🌙 深炭夜色衬黄铜金，发丝线衬线排印 | 四档明暗滑杆，一页装下整个昼夜色域。 | [打开 →](https://snoop2023.github.io/life-designer/D-午夜蓝金.html) |
 
 ---
 
