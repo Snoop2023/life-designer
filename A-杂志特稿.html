@@ -58,9 +58,6 @@ body{
 .smap-seg .kw{display:block;font-size:11px;color:var(--ink-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* 统计栏 */
-.stats{display:flex;gap:36px;flex-wrap:wrap;margin:36px 0 0;padding-top:24px;border-top:1px solid var(--rule)}
-.stat b{display:block;font-family:var(--serif);font-size:32px;font-weight:700;line-height:1.1}
-.stat span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
 
 /* ============================================================
    发言筛选栏
@@ -93,6 +90,7 @@ body{
 .turn .who .name{font-size:13.5px;font-weight:600;color:var(--ink)}
 .turn .who .role{font-size:11.5px;color:var(--ink-3)}
 .turn p{margin:10px 0;font-size:15.5px;color:var(--ink);max-width:62em}
+.turn .hr{margin:22px auto;width:72px;border-top:2px solid var(--rule)}
 .turn p.dim{color:var(--ink-2)}
 /* 强调句：衬线大字 + 暖色底 */
 .turn .q{margin:14px 0;padding:15px 20px;border-radius:12px;background:color-mix(in srgb, var(--c) 9%, var(--card));font-family:var(--serif);font-size:17.5px;font-weight:600;line-height:1.7;max-width:36em}
@@ -175,7 +173,7 @@ body.filtering .turn.match, body.filtering .insight-row.match{opacity:1}
   --gpt:#1A1A1A; --stitch:#B33A2B; --insight:#B33A2B; --action:#555555;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
-.eyebrow,.smap-label,.s-label .sess,.stat span,.chip,.insight-row .tag,.plan .m .mh,.hint,.colophon,.smap-seg .no,.smap-seg .kw{font-family:var(--mono)}
+.eyebrow,.smap-label,.s-label .sess,.chip,.insight-row .tag,.plan .m .mh,.hint,.colophon,.smap-seg .no,.smap-seg .kw{font-family:var(--mono)}
 .hero h1,.finale h2{font-weight:900}
 .hero h1 em{color:#B33A2B}
 .s-label .num{color:#E2CFCB;font-size:52px}
@@ -251,7 +249,6 @@ body[data-mode="0"]{
     <div class="smap-grid" id="smap"></div>
   </div>
 
-  <div class="stats" id="stats"></div>
 </div></header>
 
 <div class="bar"><div class="wrap legend" id="legend"></div></div>
@@ -276,6 +273,7 @@ body[data-mode="0"]{
    who: gpt / stitch；块类型: p 段落 / pdim 次要段 / ul 要点 / q 强调句 / flow 箭头流程 / plan 90天计划
    ============================================================ */
 const P = x => ({ t:'p', x });
+const HR = () => ({ t:'hr' });
 const PD = x => ({ t:'pdim', x });
 const UL = (...items) => ({ t:'ul', items });
 const Q = x => ({ t:'q', x });
@@ -313,11 +311,14 @@ const SESSIONS = [
   { who:'stitch', role:'回答', blocks:[
     P('心流的话，我好像只有练书法、写字的时候进入过。学习的过程中也有，尤其是解惑的时候——当自己的困惑被解除，我会很开心。'),
     P('比如我经常听近代史、政治经济、历史事件、经济学、社会学、心理学这些内容。因为我对世界有好奇，也对自己的生活有困惑。生活有困扰的时候，通过学习把困惑解开，这个过程就会很开心。最近学习新技术、学习 AI，我也挺开心的。'),
+    HR(),
     P('不过我现在好像更多是在学习怎么使用 AI 工具。我真正想学的是 AI 的底层原理。这个可能有点难，但我不怕。'),
     P('我高中以前数学特别好。虽然我不是很喜欢计算，但我喜欢推理，也有很自然的联想能力。尤其做奥数题的时候，或者做几何证明的时候，我会发现一件事、两件事、三件事之间有相似的结构。大脑对这种相似的结构，其实是有很微弱的、转瞬即逝的感觉的。慢慢捕捉这种感觉，时时刻刻在脑子里转，💡 一瞬间它们之间会联想起来，可能问题就有了解决思路。'),
     P('所以我最近学习 AI 需要学数学，我一点都不怕，我反而非常兴奋。我觉得这是一个契机，可以让我重新捡起数学。尤其是 AI for math 的领域出现，让我感到超级兴奋。'),
     P('我特别喜欢研究事物的底层原理。一件事情发生的底层原因，世界运行的底层逻辑。（这好像解释了为什么最近 AI 创业潮很热，我明明有想法、有能力，但做起来总是感觉没有别人那么热情，总感觉有更重要的事情没有做，有不安。原来我更好奇、更想研究的，是 AI 模型的底层原理，是如何创造出 AI。）'),
+    HR(),
     P('我也喜欢用脑科学、神经科学的知识帮助自己成为自己想成为的样子。比如健身、学习，我会用一些脑科学和神经科学的方法，让自己更自然地去做那些事情，而不是靠强迫自己自律。我会固定学习和休息的场所，自己做饭，吃健康的食物，让身体舒服。睡觉的时候，我会让晚上空调开冷一点，便于入睡；早上起床前几个小时，定时打开加热风扇，这样起床以后身体会更有能量，整个人的状态会很棒。'),
+    HR(),
     P('所以让我开心的事情是：提升自己，让自己更优秀、更好看，更有能力被爱，也更有能力去爱别人。如果能把这些经验分享出去，我也会开心。身边很多人请教我，我能帮助他们，也会开心。'),
     P('比如说，如果你能创造一个 AI，能为人类文明做贡献，让信息流通更顺畅，让人类从无聊的事情里解放出来，我也会开心。我关注政治经济，也是因为我一路走来有很多困扰和不开心。我知道身边的人也有很多困扰，甚至比我更多，所以我会想办法帮他们解决。比如国内经济不好、工作没有意义感，我其实觉得可以有更好的方法，可以共赢，不用那么辛苦。释放创造力，反而效率会更高。现在很多家庭问题，也可以通过 AI，把那些原本没办法表达出来的场景展现出来。')]},
   { who:'gpt', role:'本轮梳理', blocks:[
@@ -496,13 +497,13 @@ const WHO = {
 
 const mainEl = document.getElementById('main');
 const smapEl = document.getElementById('smap');
-const statsEl = document.getElementById('stats');
 const legendEl = document.getElementById('legend');
 
 let turnCount = 0, insightCount = 0;
 
 function renderBlock(b, c){
   if (b.t === 'p')    return `<p>${b.x}</p>`;
+  if (b.t === 'hr')   return `<div class="hr"></div>`;
   if (b.t === 'pdim') return `<p class="dim"><b>${b.x}</b></p>`;
   if (b.t === 'q')    return `<div class="q">${b.x}</div>`;
   if (b.t === 'ul')   return `<ul class="dash">${b.items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
@@ -559,10 +560,6 @@ function renderSmap(){
   }).join('');
 }
 
-function renderStats(){
-  const items = [[SESSIONS.length,'个 Session'],[turnCount,'轮发言'],[insightCount,'条 Insight'],['90 天','行动计划']];
-  statsEl.innerHTML = items.map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
-}
 
 /* ============================================================
    交互区：发言筛选（点击聚焦，再次点击恢复全部）
@@ -596,7 +593,6 @@ legendEl.addEventListener('click', ev=>{
 /* ---------- 启动 ---------- */
 mainEl.innerHTML = SESSIONS.map(renderSession).join('') + renderFinale();
 renderSmap();
-renderStats();
 renderLegend();
 document.getElementById('colophon').textContent =
   `整理于 2026-07-23 · ${SESSIONS.length} 个 Session · ${turnCount} 轮发言 · ${insightCount} 条 Insight`;
